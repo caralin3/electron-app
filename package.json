@@ -5,8 +5,14 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "tslint -c tslint.json -p tsconfig.json",
-    "start": "npm run build && electron ./dist/main.js"
+    "lint": "concurrently -n \"ts:lint,scss:lint\" -c \"red,green\" \"yarn run ts:lint\" \"yarn run scss:lint\"",
+    "start": "npm run build && electron ./dist/main.js",
+    "ts:format": "prettier --write src/**/*.ts src/**/*.tsx",
+    "ts:lint": "tslint --project ./",
+    "format": "concurrently -n \"ts:format,scss:format\" -c \"red,green\" \"yarn run ts:format\" \"yarn run scss:format\"",
+    "scss:format": "prettier --write src/**/*.scss",
+    "scss:lint": "stylelint src/**/*.scss",
+    "check": "yarn run format && yarn run lint"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
@@ -20,8 +26,23 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@geekhive/stylelint-config-standard": "^1.0.1",
+    "@geekhive/tslint-config-standard": "^1.0.0",
+    "@types/jquery": "^3.3.29",
+    "concurrently": "^4.1.0",
     "electron": "^2.0.2",
-    "tslint": "^5.10.0",
-    "typescript": "^2.8.3"
+    "husky": "^2.3.0",
+    "prettier": "^1.17.1",
+    "stylelint": "^9.0.0",
+    "tslint": "^5.16.0",
+    "typescript": ">=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run format && yarn run lint"
+    }
+  },
+  "dependencies": {
+    "jquery": "^3.4.1"
   }
 }
