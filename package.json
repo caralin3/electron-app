@@ -30,7 +30,7 @@
     "@geekhive/tslint-config-standard": "^1.0.0",
     "@types/jquery": "^3.3.29",
     "concurrently": "^4.1.0",
-    "electron": "^2.0.2",
+    "electron": "^7.2.4",
     "husky": "^2.3.0",
     "prettier": "^1.17.1",
     "stylelint": "^9.0.0",
